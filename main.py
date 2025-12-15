@@ -48,7 +48,9 @@ async def read_root(request: Request):
 # --- Rettungsdienst (RD) ---
 @app.get("/rd", response_class=HTMLResponse)
 async def form_rd(request: Request):
-    return templates.TemplateResponse("rd.html", {"request": request})
+    return templates.TemplateResponse(
+        "rd.html", {"request": request, "funkrufnamen": RMZ_LISTEN}
+    )
 
 
 @app.post("/rd/submit", response_class=HTMLResponse)
