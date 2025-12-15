@@ -3,8 +3,8 @@
 {% block content %}
 <div class="card p-4">
     <h4 class="mb-3">Rückmeldung Rettungsdienst</h4>
-    <form action="/rd/submit" method="post">
-        
+    <form action="{{ url_for('submit_rd') }}" method="post">
+
         <div class="mb-3">
             <label class="form-label">NK-Nummer</label>
             <input type="number" name="nk_nummer" class="form-control" required placeholder="z.B. 123456">
@@ -35,7 +35,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Eingabe speichern</button>
-        <a href="/" class="btn btn-link w-100 mt-2">Zurück zur Auswahl</a>
+        <a href="{{ url_for('read_root') }}" class="btn btn-link w-100 mt-2">Zurück zur Auswahl</a>
     </form>
 </div>
 {% endblock %}

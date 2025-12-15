@@ -5,13 +5,13 @@
     <div class="col-md-8 text-center">
         <p class="lead mb-4">Bitte wählen Sie Ihren Bereich aus:</p>
         <div class="d-grid gap-3">
-            <a href="/rd" class="btn btn-primary btn-lg p-4">
+            <a href="{{ url_for('form_rd') }}" class="btn btn-primary btn-lg p-4">
                 🚑 Rettungsdienst
             </a>
-            <a href="/klinik" class="btn btn-success btn-lg p-4">
+            <a href="{{ url_for('form_klinik') }}" class="btn btn-success btn-lg p-4">
                 🏥 Klinik
             </a>
-            <a href="/leitstelle" class="btn btn-secondary btn-lg p-4">
+            <a href="{{ url_for('form_lst') }}" class="btn btn-secondary btn-lg p-4">
                 🎧 Leitstelle
             </a>
         </div>
