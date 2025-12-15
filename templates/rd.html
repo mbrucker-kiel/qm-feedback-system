@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card p-4">
+    <h4 class="mb-3">Rückmeldung Rettungsdienst</h4>
+    <form action="/rd/submit" method="post">
+        
+        <div class="mb-3">
+            <label class="form-label">NK-Nummer</label>
+            <input type="number" name="nk_nummer" class="form-control" required placeholder="z.B. 123456">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rettungsmittel</label>
+            <select name="rettungsmittel" class="form-select" required>
+                <option value="" selected disabled>Bitte wählen...</option>
+                {% for rm in funkrufnamen %}
+                <option value="{{ rm }}">{{ rm }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Stichwort (nicht DPI) angemessen?</label>
+            <select name="stichwort_check" class="form-select" required>
+                <option value="zu_gering">Kräfteansatz zu gering</option>
+                <option value="angemessen" selected>Kräfteansatz angemessen</option>
+                <option value="zu_hoch">Kräfteansatz zu hoch</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Kommentar / Hinweis</label>
+            <textarea name="kommentar" class="form-control" rows="3" placeholder="Kurz halten, keine automatisierte Auswertung"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Eingabe speichern</button>
+        <a href="/" class="btn btn-link w-100 mt-2">Zurück zur Auswahl</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card p-4">
+    <h4 class="mb-3">Rückmeldung Klinik</h4>
+    <form action="/klinik/submit" method="post">
+        
+        <div class="mb-3">
+            <label class="form-label">Auftragsnummer</label>
+            <input type="number" name="auftragsnummer" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rückmeldezahl (RMZ)</label>
+            <select name="rmz" class="form-select" required>
+                <option value="" selected disabled>Bitte wählen...</option>
+                {% for r in rmz_options %}
+                <option value="{{ r }}">{{ r }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">ICD-10-Schlüssel (führende Diagnose)</label>
+            <div class="input-group mb-2">
+                <span class="input-group-text">1.</span>
+                <input type="text" list="icd_list" name="icd_1" class="form-control" required placeholder="Suchen...">
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">2.</span>
+                <input type="text" list="icd_list" name="icd_2" class="form-control" placeholder="(Optional)">
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">3.</span>
+                <input type="text" list="icd_list" name="icd_3" class="form-control" placeholder="(Optional)">
+            </div>
+            <!-- Datalist für Autocomplete -->
+            <datalist id="icd_list">
+                {% for icd in icd_options %}
+                <option value="{{ icd }}">
+                {% endfor %}
+            </datalist>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Ergebnis Manchester Triage (MST)</label>
+            <select name="mst" class="form-select" required>
+                <option value="" selected disabled>Bitte wählen...</option>
+                {% for mst in mst_options %}
+                <option value="{{ mst }}">{{ mst }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Kommentar / Hinweis</label>
+            <textarea name="kommentar" class="form-control" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Eingabe speichern</button>
+        <a href="/" class="btn btn-link w-100 mt-2">Zurück zur Auswahl</a>
+    </form>
+</div>
+{% endblock %}

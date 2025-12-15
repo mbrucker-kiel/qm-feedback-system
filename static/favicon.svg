@@ -1,0 +1,7 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+    <!-- Blue Shield background -->
+    <path d="M32 2 L6 12 V28 C6 44 18 56 32 62 C46 56 58 44 58 28 V12 L32 2Z" fill="#0d6efd"/>
+    <!-- White Medical Cross -->
+    <rect x="28" y="18" width="8" height="28" rx="1" fill="white" />
+    <rect x="18" y="28" width="28" height="8" rx="1" fill="white" />
+</svg>
