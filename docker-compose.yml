@@ -1,0 +1,14 @@
+services:
+    app:
+        build: .
+        container_name: qm-feedback-app
+        ports:
+            - "8002:8002"
+        volumes:
+            - .:/app
+        environment:
+            - MODULE_NAME=main
+            - VARIABLE_NAME=app
+            - PORT=8002
+        # Command to run uvicorn in production mode (or use --reload for dev)
+        command: uvicorn main:app --host 0.0.0.0 --port 8002 --reload
