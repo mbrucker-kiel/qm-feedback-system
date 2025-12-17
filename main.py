@@ -85,6 +85,16 @@ async def submit_rd(
             },
         )
 
+    if int(nk_date[:2]) < 25:
+        return templates.TemplateResponse(
+            "rd.html",
+            {
+                "request": request,
+                "funkrufnamen": FUNKRUFNAMEN,
+                "error": "Das Jahr muss 25 oder höher sein.",
+            },
+        )
+
     # Formatierung: NK YYMMDD 12345
     nk_nummer = f"NK {nk_date} {nk_sequence}"
 
@@ -177,6 +187,15 @@ async def submit_lst(
             {
                 "request": request,
                 "error": "Das Datum muss im Format YYMMDD (6 Ziffern) sein.",
+            },
+        )
+
+    if int(nk_date[:2]) < 25:
+        return templates.TemplateResponse(
+            "lst.html",
+            {
+                "request": request,
+                "error": "Das Jahr muss 25 oder höher sein.",
             },
         )
 
