@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Optional
 
 from fastapi import FastAPI, Form, Request
@@ -92,6 +93,27 @@ async def submit_rd(
                 "request": request,
                 "funkrufnamen": FUNKRUFNAMEN,
                 "error": "Das Jahr muss 25 oder höher sein.",
+            },
+        )
+
+    try:
+        input_date = datetime.strptime(nk_date, "%y%m%d").date()
+        if input_date > datetime.now().date():
+            return templates.TemplateResponse(
+                "rd.html",
+                {
+                    "request": request,
+                    "funkrufnamen": FUNKRUFNAMEN,
+                    "error": "Das Datum darf nicht in der Zukunft liegen.",
+                },
+            )
+    except ValueError:
+        return templates.TemplateResponse(
+            "rd.html",
+            {
+                "request": request,
+                "funkrufnamen": FUNKRUFNAMEN,
+                "error": "Ungültiges Datum (z.B. 30. Februar).",
             },
         )
 
@@ -196,6 +218,25 @@ async def submit_lst(
             {
                 "request": request,
                 "error": "Das Jahr muss 25 oder höher sein.",
+            },
+        )
+
+    try:
+        input_date = datetime.strptime(nk_date, "%y%m%d").date()
+        if input_date > datetime.now().date():
+            return templates.TemplateResponse(
+                "lst.html",
+                {
+                    "request": request,
+                    "error": "Das Datum darf nicht in der Zukunft liegen.",
+                },
+            )
+    except ValueError:
+        return templates.TemplateResponse(
+            "lst.html",
+            {
+                "request": request,
+                "error": "Ungültiges Datum (z.B. 30. Februar).",
             },
         )
 
