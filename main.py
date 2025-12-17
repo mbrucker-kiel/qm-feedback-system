@@ -14,6 +14,8 @@ templates = Jinja2Templates(directory="templates")
 # --- Dummy Daten (Später aus DB oder Config) ---
 RMZ_LISTEN = ["RMZ Liste 1", "RMZ Liste 2", "RMZ Liste 3"]  # Hier echte Listen ergänzen
 
+FUNKRUFNAMEN = ["10-83-01", "10-83-02", "10-82-01"]
+
 
 def load_icd_codes():
     codes = []
@@ -49,18 +51,43 @@ async def read_root(request: Request):
 @app.get("/rd", response_class=HTMLResponse)
 async def form_rd(request: Request):
     return templates.TemplateResponse(
-        "rd.html", {"request": request, "funkrufnamen": RMZ_LISTEN}
+        "rd.html", {"request": request, "funkrufnamen": FUNKRUFNAMEN}
     )
 
 
 @app.post("/rd/submit", response_class=HTMLResponse)
 async def submit_rd(
     request: Request,
-    nk_nummer: int = Form(...),
+    nk_date: str = Form(...),
+    nk_sequence: str = Form(...),
     rettungsmittel: str = Form(...),
     stichwort_check: str = Form(...),
     kommentar: Optional[str] = Form(None),
 ):
+    # Validierung NK-Nummer
+    if len(nk_sequence) != 5 or not nk_sequence.isdigit():
+        return templates.TemplateResponse(
+            "rd.html",
+            {
+                "request": request,
+                "funkrufnamen": FUNKRUFNAMEN,
+                "error": "Die laufende Nummer muss genau 5 Ziffern enthalten.",
+            },
+        )
+
+    if len(nk_date) != 6 or not nk_date.isdigit():
+        return templates.TemplateResponse(
+            "rd.html",
+            {
+                "request": request,
+                "funkrufnamen": FUNKRUFNAMEN,
+                "error": "Das Datum muss im Format YYMMDD (6 Ziffern) sein.",
+            },
+        )
+
+    # Formatierung: NK YYMMDD 12345
+    nk_nummer = f"NK {nk_date} {nk_sequence}"
+
     # HIER: Speichern in Datenbank
     print(
         f"RD FEEDBACK: NK={nk_nummer}, RM={rettungsmittel}, Check={stichwort_check}, Kom={kommentar}"
@@ -88,7 +115,7 @@ async def form_klinik(request: Request):
 @app.post("/klinik/submit", response_class=HTMLResponse)
 async def submit_klinik(
     request: Request,
-    auftragsnummer: int = Form(...),
+    auftragsnummer: str = Form(...),
     rmz: str = Form(...),
     icd_1: str = Form(...),
     icd_2: Optional[str] = Form(None),
@@ -96,10 +123,23 @@ async def submit_klinik(
     mst: str = Form(...),
     kommentar: Optional[str] = Form(None),
 ):
+    if len(auftragsnummer) > 6 or not auftragsnummer.isdigit():
+        return templates.TemplateResponse(
+            "klinik.html",
+            {
+                "request": request,
+                "rmz_options": RMZ_LISTEN,
+                "icd_options": ICD_CODES,
+                "mst_options": MST_GRUPPEN,
+                "error": "Die Auftragsnummer darf maximal 6 Ziffern enthalten.",
+            },
+        )
+
     # HIER: Speichern in Datenbank
     diagnosen = [d for d in [icd_1, icd_2, icd_3] if d]
+    auftragsnummer_int = int(auftragsnummer)
     print(
-        f"KLINIK FEEDBACK: AN={auftragsnummer}, RMZ={rmz}, ICDs={diagnosen}, MST={mst}"
+        f"KLINIK FEEDBACK: AN={auftragsnummer_int}, RMZ={rmz}, ICDs={diagnosen}, MST={mst}"
     )
 
     return templates.TemplateResponse(
@@ -116,16 +156,36 @@ async def form_lst(request: Request):
 @app.post("/leitstelle/submit", response_class=HTMLResponse)
 async def submit_lst(
     request: Request,
-    nk_nummer: int = Form(...),
+    nk_date: str = Form(...),
+    nk_sequence: str = Form(...),
     sna_anpassung: str = Form(...),
     kommentar: Optional[str] = Form(None),
 ):
+    # Validierung NK-Nummer
+    if len(nk_sequence) != 5 or not nk_sequence.isdigit():
+        return templates.TemplateResponse(
+            "lst.html",
+            {
+                "request": request,
+                "error": "Die laufende Nummer muss genau 5 Ziffern enthalten.",
+            },
+        )
+
+    if len(nk_date) != 6 or not nk_date.isdigit():
+        return templates.TemplateResponse(
+            "lst.html",
+            {
+                "request": request,
+                "error": "Das Datum muss im Format YYMMDD (6 Ziffern) sein.",
+            },
+        )
+
+    # Formatierung: NK YYMMDD 12345
+    nk_nummer = f"NK {nk_date} {nk_sequence}"
+
     # HIER: Speichern in Datenbank
     print(f"LST FEEDBACK: NK={nk_nummer}, SNA={sna_anpassung}")
 
-    return templates.TemplateResponse(
-        "success.html", {"request": request, "source": "Leitstelle"}
-    )
     return templates.TemplateResponse(
         "success.html", {"request": request, "source": "Leitstelle"}
     )

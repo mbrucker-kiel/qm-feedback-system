@@ -3,11 +3,28 @@
 {% block content %}
 <div class="card p-4">
     <h4 class="mb-3">Rückmeldung Leitstelle</h4>
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
     <form action="{{ url_for('submit_lst') }}" method="post">
 
         <div class="mb-3">
             <label class="form-label">NK-Nummer</label>
-            <input type="number" name="nk_nummer" class="form-control" required>
+            <div class="input-group">
+                <span class="input-group-text">NK</span>
+                <input type="text" id="nk_date_lst" name="nk_date" class="form-control" placeholder="YYMMDD" pattern="\d{6}" maxlength="6" required title="Bitte Datum im Format YYMMDD eingeben (z.B. 231224)">
+                <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('date_picker_lst').showPicker()">📅</button>
+                <input type="text" name="nk_sequence" class="form-control" placeholder="12345" pattern="\d{5}" maxlength="5" required title="Bitte genau 5 Ziffern eingeben">
+            </div>
+            <input type="date" id="date_picker_lst" style="visibility: hidden; position: absolute; width: 0; height: 0;" onchange="
+                if(this.value) {
+                    const parts = this.value.split('-');
+                    document.getElementById('nk_date_lst').value = parts[0].slice(-2) + parts[1] + parts[2];
+                }
+            ">
+            <div class="form-text">Datum (YYMMDD) und 5-stellige laufende Nummer</div>
         </div>
 
         <div class="mb-3">
