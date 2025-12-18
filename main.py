@@ -1,5 +1,7 @@
+
 from datetime import datetime
 from typing import List, Optional
+from db import get_db_connection
 
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
@@ -136,10 +138,32 @@ async def submit_rd(
     # Formatierung: NK YYMMDD 12345
     nk_nummer = f"NK {nk_date} {nk_sequence}"
 
-    # HIER: Speichern in Datenbank
-    print(
-        f"RD FEEDBACK: NK={nk_nummer}, RM={rettungsmittel}, Check={stichwort_check}, Kom={kommentar}"
-    )
+
+    # Speichern in Datenbank
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS rd_feedback (
+                id SERIAL PRIMARY KEY,
+                nk_nummer VARCHAR(20),
+                rettungsmittel VARCHAR(50),
+                stichwort_check VARCHAR(100),
+                kommentar TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+        cur.execute(
+            "INSERT INTO rd_feedback (nk_nummer, rettungsmittel, stichwort_check, kommentar) VALUES (%s, %s, %s, %s)",
+            (nk_nummer, rettungsmittel, stichwort_check, kommentar)
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"DB error (RD): {e}")
 
     return templates.TemplateResponse(
         "success.html", {"request": request, "source": "Rettungsdienst"}
@@ -183,12 +207,34 @@ async def submit_klinik(
             },
         )
 
-    # HIER: Speichern in Datenbank
+
+    # Speichern in Datenbank
     diagnosen = [d for d in [icd_1, icd_2, icd_3] if d]
-    auftragsnummer_int = int(auftragsnummer)
-    print(
-        f"KLINIK FEEDBACK: AN={auftragsnummer_int}, RMZ={rmz}, ICDs={diagnosen}, MST={mst}"
-    )
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS klinik_feedback (
+                id SERIAL PRIMARY KEY,
+                auftragsnummer INTEGER,
+                rmz VARCHAR(100),
+                icds TEXT,
+                mst VARCHAR(50),
+                kommentar TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+        cur.execute(
+            "INSERT INTO klinik_feedback (auftragsnummer, rmz, icds, mst, kommentar) VALUES (%s, %s, %s, %s, %s)",
+            (int(auftragsnummer), rmz, ",".join(diagnosen), mst, kommentar)
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"DB error (Klinik): {e}")
 
     return templates.TemplateResponse(
         "success.html", {"request": request, "source": "Klinik"}
@@ -259,8 +305,31 @@ async def submit_lst(
     # Formatierung: NK YYMMDD 12345
     nk_nummer = f"NK {nk_date} {nk_sequence}"
 
-    # HIER: Speichern in Datenbank
-    print(f"LST FEEDBACK: NK={nk_nummer}, SNA={sna_anpassung}")
+
+    # Speichern in Datenbank
+    try:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute(
+            """
+            CREATE TABLE IF NOT EXISTS lst_feedback (
+                id SERIAL PRIMARY KEY,
+                nk_nummer VARCHAR(20),
+                sna_anpassung VARCHAR(100),
+                kommentar TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+            """
+        )
+        cur.execute(
+            "INSERT INTO lst_feedback (nk_nummer, sna_anpassung, kommentar) VALUES (%s, %s, %s)",
+            (nk_nummer, sna_anpassung, kommentar)
+        )
+        conn.commit()
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"DB error (LST): {e}")
 
     return templates.TemplateResponse(
         "success.html", {"request": request, "source": "Leitstelle"}
