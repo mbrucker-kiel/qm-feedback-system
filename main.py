@@ -21,9 +21,10 @@ def load_rmz_list():
     try:
         with open("RMZ.csv", "r", encoding="utf-8") as csvfile:
             reader = csv.reader(csvfile)
+            header = next(reader, None)  # skip header
             for row in reader:
-                if row:
-                    rmz_list.append(row[0])
+                if row and len(row) >= 2:
+                    rmz_list.append(f"{row[0]} - {row[1]}")
     except Exception as e:
         print(f"Error loading RMZ list: {e}")
     return rmz_list
