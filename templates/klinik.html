@@ -12,12 +12,12 @@
 
         <div class="mb-3">
             <label class="form-label">Rückmeldezahl (RMZ)</label>
-            <select name="rmz" class="form-select" required>
-                <option value="" selected disabled>Bitte wählen...</option>
+            <input type="text" list="rmz_list" name="rmz" class="form-control" required placeholder="Suchen...">
+            <datalist id="rmz_list">
                 {% for r in rmz_options %}
                 <option value="{{ r }}">{{ r }}</option>
                 {% endfor %}
-            </select>
+            </datalist>
         </div>
 
         <div class="mb-3">

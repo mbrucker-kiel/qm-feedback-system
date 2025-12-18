@@ -1,0 +1,192 @@
+2. Untergruppe,Erläuterung
+0,kein Patient vorhanden
+110,primäre Todesfeststellung (aus Notfalleinsatz)
+111,Leichenschau (geplant)
+121,Rea-Versuch ohne ROSC*
+122,Rea-Versuch mit ROSC* (Tod am EO)
+123,Rea-Versuch mit ROSC* (dann Tod auf Transport)
+124,Reanimation laufend
+130,Reanimation erfolgreich
+201,Zuverlegung Intensiv mit Arzt
+202,Zuverlegung Intensiv ohne Arzt
+203,Zuverlegung IMC mit Arzt
+204,Zuverlegung IMC ohne Arzt
+205,Zuverlegung Intensiv mit Arzt
+206,Zuverlegung Intensiv ohne Arzt
+210,sonstige kombinierte Verletzungen
+211,Polytrauma mit SHT
+212,Polytrauma ohne SHT
+213,Schockraumindikation nach Unfallhergang
+214,Gesichts-/Kopfverletzung
+215,Gesichts-/Kopfverletzung mit Augenbeteiligung
+216,Gesichts-/Kopfverletzung mit HNO- oder MKG-Beteiligung
+221,Kopf SHT offen
+222,Kopf SHT geschlossen
+230,sonstige Thoraxchirurgische Verletzungen
+231,Thorax penetrierend
+232,Thorax geschlossen/stumpf
+233,Pneumothorax
+240,sonstige viszeralchirurgische Notfälle
+241,Abdomen penetrierend
+242,Abdomen geschlossen / stumpf
+243,akutes Abdomen (nicht traumatisch)
+244,Appendizitis
+251,mit neurologischen Ausfällen
+252,ohne neurologische Ausfälle
+253,WS / Bandscheibe nicht traumatisch mit neurologischen Ausfallen
+254,WS / Bandscheibe nicht traumatisch ohne neurologischen Ausfällen
+261,Becken penetrierend
+262,Becken geschlossen/stumpf
+270,sonstige kombinierte Extremitätenverletzungen
+271,Extremitäten offen
+272,Extremitäten geschlossen
+273,Schenkelhals
+274,Luxation
+275,Handverletzung
+276,Hand Amputation
+277,Finger Amputation
+278,Extremitäten Amputation
+281,Verbrennung / Verbrühung
+282,Verätzung (äußerlich)
+283,Blitzschlag / Hochspannungstrauma
+290,sonstige gefäßchirurgische Notfälle
+291,Extremitäten mit Gefäß-/Nervenverletzung
+292,Aortenaneurysma
+293,Extremitätenischaemie (akut)
+301,Zuverlegung Intensiv mit Arzt
+302,Zuverlegung Intensiv ohne Arzt
+303,Zuverlegung IMC mit Arzt
+304,Zuverlegung IMC ohne Arzt
+310,sonstige respiratorische Notfälle
+311,Atemnot (unklar)
+312,Obstruktion (Asthma / COPD)
+313,Hämoptoe / Hämoptysen
+314,(Bolus-)Aspiration
+315,Bronchitis / Pneumonie
+316,Hyperventilation
+317,Rauchgas / Reizgas (nicht 761!)
+318,Spontanpneumothorax
+319,(Beinahe-)Ertrinken
+320,sonstige internistische Notfälle
+321,Anaphylaxie/Unverträglichkeitsreaktion
+322,Synkope / Kollaps
+323,Hypertonie
+324,Hypotonie
+325,Thrombose
+326,unklares Fieber
+327,Hitzeerschöpfung / Hitzschlag
+328,Unterkühlung / Erfrierung
+329,Exsikkose
+330,sonstige kardiologische Notfälle
+331,STEMI < 12h (EKG gesichert)
+332,STEMI >12h (EKG gesichert)
+333,akutes Koronarsyndrom (Sonstiges)
+341,Arrhythmie / Rhythmusstörungen
+342,bradykarde Rhythmusstörungen
+343,tachykarde Rhythmusstörungen
+344,Elektrounfall (Schwachstrom)
+347,kardiogener Schock
+348,Herzinsuffizienz / Lungenödem
+349,Lungenembolie
+350,sonstige gastroenterologische Notfälle
+351,obere GI-Blutung
+352,untere GI-Blutung
+353,unklares Abdomen (nicht 243)
+354,infektiöse Gastroenteritis
+355,sonstige Gastroenteritis
+356,Verätzung / Ingestion (innerlich)
+357,Kolik (nicht 711!)
+360,sonstige Intoxikationen
+361,Alkohol
+362,Drogen / Rauschgift
+363,Mischintoxikation Alkohol / Drogen / Medikamente
+364,Lebensmittel
+365,Medikamente
+366,Pflanzenschutzmittel
+367,tierische Gifte / Giftpflanzen
+370,sonstige infektiologische Notfälle
+371,definierte Infektionskrankheit
+372,Meningitis
+373,TBC
+374,septischer Schock
+379,hochkontagiöse Erkrankung
+391,diabetischer Notfall
+392,Hyperglykämie
+393,Hypoglykämie
+401,Zuverlegung Intensiv mit Arzt
+402,Zuverlegung Intensiv ohne Arzt
+410,sonstige neurologische Notfälle
+411,Krampfanfall bei bekanntem Krampfleiden
+412,erstmaliger Krampfanfall
+413,Kopfschmerz
+414,unklare Bewusstlosigkeit
+421,Apoplex / TIA / Blutung <6 h
+422,Apoplex / TIA / Blutung 6–24 h
+423,Apoplex / TIA / Blutung 24–72 h
+424,Apoplex / TIA / Blutung > 72 h
+430,sonstige psychiatrische Notfälle
+431,Suizidversuch (drohend)
+432,Suizidversuch
+433,Orientierungsstörungen
+434,psychiatrische Einweisung
+435,psychiatrische Einweisung nach §10 HFEG
+436,psychiatrischer Ausnahmezustand
+501,Zuverlegung Intensiv mit Arzt
+502,Zuverlegung Intensiv ohne Arzt
+503,Zuverlegung - Inkubator
+510,sonstige pädiatrische Notfälle
+511,pädiatrisch - Atemnot
+512,Krupp / Pseudokrupp
+513,pädiatrisch Fieberkrampf
+514,pädiatrisch Epilepsie
+515,akuter kindlicher Hüftschmerz
+520,sonstige Notfälle in der Schwangerschaft
+521,Entbindung / Einsetzende Geburt < 37 SSW
+522,Entbindung / Einsetzende Geburt>= 37. SSW
+523,vorzeitige Wehen Tätigkeit
+524,präklinische Geburt
+525,präklinische Frühgeburt
+526,Eklampsie
+527,vaginale Blutung während der Schwangerschaft
+530,sonstige gynäkologische Notfälle
+531,vaginale Blutung
+532,Unterbauchschmerzen
+533,Sexualdelikt
+601,Transport zu definierter Leistung (KT)
+602,Dialyse
+603,Herzkatheter
+604,CT
+605,MRT
+606,Endoskopie
+607,PEG-Wechsel
+608,Tragehilfe
+621,Verlegung (nicht Intensiv) o. Arztbegleitung
+622,Verlegung (nicht Intensiv) mit Arztbegleitung
+630,Rücktransport
+631,Entlassung aus stationärer Behandlung (KT)
+640,soziale Hilfeleistung (z. B. Im Rahmen Hausnotruf)
+650,beschwerdefreier Betroffener (z. B. i. R. Bereitstellg.)
+660,sonstige Einsätze ohne Transport
+670,sonstige Einsätze mit Transport
+702,Geriatrie Einweisung
+703,Haut- und Geschlechtskrankheiten
+710,sonstige urologische Notfälle
+711,Nieren-Harnleiterkolik
+712,Hodenschmerz
+713,Harnverhalt
+714,Hämaturie
+715,Katheter Wechsel
+716,Zustand nach Katheter Verlust
+720,sonstige ophthalmologische Notfälle
+721,Augenverletzung mit Fremdkörper
+722,Augenverletzung ohne Fremdkörper
+723,akute Augenerkrankung
+730,sonstige HNO Notfälle
+731,Epistaxis
+732,Barotrauma
+733,Hörsturz
+741,MGK Einweisung
+751,Strahlentrauma
+761,Kohlenmonoxid-Vergiftung
+762,Dekompressionskrankheit
+770,sonstige Notfallsituation

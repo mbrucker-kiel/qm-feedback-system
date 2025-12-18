@@ -12,8 +12,23 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # Templates Konfiguration
 templates = Jinja2Templates(directory="templates")
 
-# --- Dummy Daten (Später aus DB oder Config) ---
-RMZ_LISTEN = ["RMZ Liste 1", "RMZ Liste 2", "RMZ Liste 3"]  # Hier echte Listen ergänzen
+
+# --- RMZ Daten aus CSV laden ---
+import csv
+
+def load_rmz_list():
+    rmz_list = []
+    try:
+        with open("RMZ.csv", "r", encoding="utf-8") as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if row:
+                    rmz_list.append(row[0])
+    except Exception as e:
+        print(f"Error loading RMZ list: {e}")
+    return rmz_list
+
+RMZ_LISTEN = load_rmz_list()
 
 FUNKRUFNAMEN = ["10-83-01", "10-83-02", "10-82-01"]
 
