@@ -10,6 +10,7 @@
             <input type="number" name="auftragsnummer" class="form-control" required max="999999" oninput="if(this.value.length > 6) this.value = this.value.slice(0, 6);" title="Bitte maximal 6 Ziffern eingeben">
         </div>
 
+
         <div class="mb-3">
             <label class="form-label">Rückmeldezahl (RMZ)</label>
             <input type="text" list="rmz_list" name="rmz" class="form-control" required placeholder="Suchen...">
@@ -18,6 +19,72 @@
                 <option value="{{ r }}">{{ r }}</option>
                 {% endfor %}
             </datalist>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Rückmelde-Code (RMC) Feedback</label>
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label>Bewusstsein</label>
+                    <select name="rmc_bewusstsein" class="form-select" required>
+                        <option value="1">unauffällig</option>
+                        <option value="2">somnolent</option>
+                        <option value="3">bedroht</option>
+                        <option value="4">komatös I-III</option>
+                        <option value="5">komatös IV</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label>Atmung</label>
+                    <select name="rmc_atmung" class="form-select" required>
+                        <option value="1">unauffällig</option>
+                        <option value="2">leicht gestört</option>
+                        <option value="3">drohende schwere Störung</option>
+                        <option value="4">schwer gestört</option>
+                        <option value="5">Atemstillstand</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label>Kreislauf</label>
+                    <select name="rmc_kreislauf" class="form-select" required>
+                        <option value="1">unauffällig</option>
+                        <option value="2">leicht gestört</option>
+                        <option value="3">drohende schwere Störung</option>
+                        <option value="4">schwer gestört</option>
+                        <option value="5">pulslos</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label>Verletzung</label>
+                    <select name="rmc_verletzung" class="form-select" required>
+                        <option value="1">keine</option>
+                        <option value="2">leicht</option>
+                        <option value="3">denkbar</option>
+                        <option value="4">schwer</option>
+                        <option value="5">Polytrauma</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label>Neurologie</label>
+                    <select name="rmc_neurologie" class="form-select" required>
+                        <option value="1">unauffällig</option>
+                        <option value="2">vorbekannte Störung</option>
+                        <option value="3">schwere Störung</option>
+                        <option value="4">akute Störung</option>
+                        <option value="5">progediente Störung</option>
+                    </select>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label>Schmerz</label>
+                    <select name="rmc_schmerz" class="form-select" required>
+                        <option value="1">keine (0)</option>
+                        <option value="2">leicht (1–3)</option>
+                        <option value="3">mittel (4–6)</option>
+                        <option value="4">stark (7–9)</option>
+                        <option value="5">extrem (10)</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <div class="mb-3">

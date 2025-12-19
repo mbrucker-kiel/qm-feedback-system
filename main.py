@@ -184,6 +184,8 @@ async def form_klinik(request: Request):
     )
 
 
+
+# --- Updated Klinik Submit with RMC fields ---
 @app.post("/klinik/submit", response_class=HTMLResponse)
 async def submit_klinik(
     request: Request,
@@ -194,6 +196,12 @@ async def submit_klinik(
     icd_3: Optional[str] = Form(None),
     mst: str = Form(...),
     kommentar: Optional[str] = Form(None),
+    rmc_bewusstsein: str = Form(...),
+    rmc_atmung: str = Form(...),
+    rmc_kreislauf: str = Form(...),
+    rmc_verletzung: str = Form(...),
+    rmc_neurologie: str = Form(...),
+    rmc_schmerz: str = Form(...),
 ):
     if len(auftragsnummer) > 6 or not auftragsnummer.isdigit():
         return templates.TemplateResponse(
@@ -207,8 +215,12 @@ async def submit_klinik(
             },
         )
 
+    # Extract RMZ code (first column of RMZ.csv, before ' - ')
+    rmz_code = rmz.split(' - ')[0] if ' - ' in rmz else rmz
 
-    # Speichern in Datenbank
+    # Build 9-digit RMC code: 3 digits for RMZ code, 6 digits for feedback
+    rmc_code = f"{rmz_code:0>3}{rmc_bewusstsein}{rmc_atmung}{rmc_kreislauf}{rmc_verletzung}{rmc_neurologie}{rmc_schmerz}"
+
     diagnosen = [d for d in [icd_1, icd_2, icd_3] if d]
     try:
         conn = get_db_connection()
@@ -222,13 +234,14 @@ async def submit_klinik(
                 icds TEXT,
                 mst VARCHAR(50),
                 kommentar TEXT,
+                rmc_code VARCHAR(20),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
             """
         )
         cur.execute(
-            "INSERT INTO klinik_feedback (auftragsnummer, rmz, icds, mst, kommentar) VALUES (%s, %s, %s, %s, %s)",
-            (int(auftragsnummer), rmz, ",".join(diagnosen), mst, kommentar)
+            "INSERT INTO klinik_feedback (auftragsnummer, rmz, icds, mst, kommentar, rmc_code) VALUES (%s, %s, %s, %s, %s, %s)",
+            (int(auftragsnummer), rmz, ",".join(diagnosen), mst, kommentar, rmc_code)
         )
         conn.commit()
         cur.close()
