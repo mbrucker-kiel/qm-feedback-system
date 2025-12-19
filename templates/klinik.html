@@ -5,14 +5,24 @@
     <h4 class="mb-3">Rückmeldung Klinik</h4>
     <form action="{{ url_for('submit_klinik') }}" method="post">
 
+
         <div class="mb-3">
             <label class="form-label">Auftragsnummer</label>
             <input type="number" name="auftragsnummer" class="form-control" required max="999999" oninput="if(this.value.length > 6) this.value = this.value.slice(0, 6);" title="Bitte maximal 6 Ziffern eingeben">
         </div>
 
+        <div class="mb-3">
+            <label class="form-label">Ergebnis Manchester Triage (MST)</label>
+            <select name="mst" class="form-select" required>
+                <option value="" selected disabled>Bitte wählen...</option>
+                {% for mst in mst_options %}
+                <option value="{{ mst }}">{{ mst }}</option>
+                {% endfor %}
+            </select>
+        </div>
 
         <div class="mb-3">
-            <label class="form-label">Rückmeldezahl (RMZ)</label>
+            <label class="form-label">Rückmelde-Indikation (RMZ)</label>
             <input type="text" list="rmz_list" name="rmz" class="form-control" required placeholder="Suchen...">
             <datalist id="rmz_list">
                 {% for r in rmz_options %}
@@ -22,7 +32,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Rückmelde-Code (RMC) Feedback</label>
+            <label class="form-label">Rückmelde-Code (RMC)</label>
             <div class="row">
                 <div class="col-md-4 mb-2">
                     <label>Bewusstsein</label>
