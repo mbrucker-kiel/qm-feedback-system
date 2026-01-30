@@ -5,6 +5,7 @@ from db import get_db_connection
 
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
+from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -65,6 +66,21 @@ MST_GRUPPEN = [
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+
+# --- Rechtliches ---
+@app.get("/impressum", response_class=HTMLResponse)
+async def impressum(request: Request):
+    return templates.TemplateResponse("impressum.html", {"request": request})
+
+
+@app.get("/datenschutz", response_class=HTMLResponse)
+async def datenschutz(request: Request):
+    return templates.TemplateResponse("datenschutz.html", {"request": request})
+
+@app.get('/robots.txt', response_class=PlainTextResponse, include_in_schema=False)
+async def robots():
+    data = """User-agent: *\nDisallow: /"""
+    return data
 
 # --- Rettungsdienst (RD) ---
 @app.get("/rd", response_class=HTMLResponse)
