@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QM Feedback</title>
-    <link href="../static/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', path='bootstrap.min.css') }}" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', path='favicon.svg') }}">
     <style>
         body { background-color: #f8f9fa; }
@@ -28,7 +28,7 @@
             <a href="{{ url_for('datenschutz') }}">Datenschutz</a>
         </div>
     </div>
-    <script src="../static/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', path='bootstrap.bundle.min.js') }}"></script>
     <script>
         // Setzt das heutige Datum als Standardwert
         document.addEventListener("DOMContentLoaded", function() {
