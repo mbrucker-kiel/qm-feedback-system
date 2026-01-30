@@ -1,11 +1,11 @@
 
 from datetime import datetime
+from os import getenv
 from typing import List, Optional
 from db import get_db_connection
 
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import HTMLResponse, PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -14,6 +14,55 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Templates Konfiguration
 templates = Jinja2Templates(directory="templates")
+
+# --- Shared secret protection ---
+SHARED_SECRET = getenv("SHARED_SECRET", "change-me")
+EXEMPT_PATHS = {"/favicon.ico", "/health", "/robots.txt"}
+EXEMPT_PREFIXES = ("/static",)
+
+
+@app.middleware("http")
+async def enforce_shared_secret(request: Request, call_next):
+    path = request.url.path
+
+    # Allow health checks and static assets without a token
+    if path in EXEMPT_PATHS:
+        if path == "/health":
+            return PlainTextResponse("ok")
+        return await call_next(request)
+    if any(path.startswith(prefix) for prefix in EXEMPT_PREFIXES):
+        return await call_next(request)
+
+    token_cookie = request.cookies.get("shared_secret")
+    token_query = request.query_params.get("key")
+
+    if token_cookie == SHARED_SECRET:
+        return await call_next(request)
+
+    if token_query == SHARED_SECRET:
+        if request.method.upper() == "GET":
+            cleaned_url = request.url.replace(query=None)
+            response = RedirectResponse(url=str(cleaned_url), status_code=303)
+            response.set_cookie(
+                "shared_secret",
+                SHARED_SECRET,
+                httponly=True,
+                secure=True,
+                samesite="lax",
+            )
+            return response
+
+        response = await call_next(request)
+        response.set_cookie(
+            "shared_secret",
+            SHARED_SECRET,
+            httponly=True,
+            secure=True,
+            samesite="lax",
+        )
+        return response
+
+    return PlainTextResponse("Zugriff verweigert, bitte verwenden Sie den korrekten Schlüssel.", status_code=403)
 
 
 # --- RMZ Daten aus CSV laden ---
