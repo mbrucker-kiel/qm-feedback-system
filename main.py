@@ -83,8 +83,32 @@ def load_rmz_list():
 
 RMZ_LISTEN = load_rmz_list()
 
-FUNKRUFNAMEN = ["10-83-01", "10-83-02", "10-82-01"]
+def load_funkrufnamen():
+    funkrufnamen = []
+    try:
+        with open("Funkrufnamen.csv", "r", encoding="utf-8") as csvfile:
+            reader = csv.DictReader(csvfile, delimiter=";")
+            for row in reader:
+                rufname = (row.get("Rufname") or "").strip()
+                opta = (row.get("OPTA-Rufname") or "").strip()
+                if rufname:
+                    funkrufnamen.append(
+                        {
+                            "rufname": rufname,
+                            "opta": opta or rufname,
+                        }
+                    )
+    except Exception as e:
+        print(f"Error loading Funkrufnamen: {e}")
 
+    if not funkrufnamen:
+        funkrufnamen = [
+            {"rufname": "MISSING", "opta": "Fehlend"},
+        ]
+    return funkrufnamen
+
+FUNKRUFNAMEN = load_funkrufnamen()
+    
 
 def load_icd_codes():
     codes = []

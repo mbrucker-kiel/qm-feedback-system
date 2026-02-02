@@ -32,7 +32,7 @@
             <select name="rettungsmittel" class="form-select" required>
                 <option value="" selected disabled>Bitte wählen...</option>
                 {% for rm in funkrufnamen %}
-                <option value="{{ rm }}">{{ rm }}</option>
+                <option value="{{ rm.rufname }}">{{ rm.opta }}</option>
                 {% endfor %}
             </select>
         </div>
