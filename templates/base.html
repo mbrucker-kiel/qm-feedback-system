@@ -22,10 +22,9 @@
         </div>
 
         {% block content %}{% endblock %}
-        <div class="text-center mb-4">
-
-            <a href="{{ url_for('impressum') }}">Impressum</a>
-            <a href="{{ url_for('datenschutz') }}">Datenschutz</a>
+        <div class="text-center mt-4 pt-3 border-top text-muted small">
+            <a href="{{ url_for('impressum') }}" class="text-muted me-3">Impressum</a>
+            <a href="{{ url_for('datenschutz') }}" class="text-muted">Datenschutz</a>
         </div>
     </div>
     <script src="{{ url_for('static', path='bootstrap.bundle.min.js') }}"></script>
