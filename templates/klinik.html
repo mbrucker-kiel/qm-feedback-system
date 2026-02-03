@@ -120,16 +120,6 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Ergebnis Manchester Triage (MST)</label>
-            <select name="mst" class="form-select" required>
-                <option value="" selected disabled>Bitte wählen...</option>
-                {% for mst in mst_options %}
-                <option value="{{ mst }}">{{ mst }}</option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <div class="mb-3">
             <label class="form-label">Kommentar / Hinweis</label>
             <textarea name="kommentar" class="form-control" rows="3"></textarea>
         </div>
